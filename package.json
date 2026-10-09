@@ -1,0 +1,11 @@
+{
+  "name": "ai-quiz-generator",
+  "version": "1.0.0",
+  "description": "AI-powered quiz generation platform for students",
+  "scripts": {
+    "install:all": "npm install --prefix backend && npm install --prefix frontend",
+    "server": "npm run dev --prefix backend",
+    "client": "npm start --prefix frontend",
+    "seed": "npm run seed --prefix backend"
+  }
+}

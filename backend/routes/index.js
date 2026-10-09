@@ -1,0 +1,12 @@
+const r = require('express').Router(), multer = require('multer');
+const { protect, wrap: w } = require('../middleware/auth'), c = require('../controllers');
+const limit = require('../middleware/limit');
+const up = multer({ storage: multer.memoryStorage(), limits: { fileSize: 5 * 1024 * 1024 } });
+r.post('/auth/register', limit(10, 60000), w(c.register)); r.post('/auth/login', limit(10, 60000), w(c.login));
+r.post('/quizzes/generate', protect, limit(10, 60000), up.single('file'), w(c.generate));
+r.get('/quizzes', protect, w(c.listQuizzes)); r.get('/quizzes/:id', protect, w(c.getQuiz));
+r.post('/attempts', protect, w(c.submitAttempt));
+r.get('/attempts/history', protect, w(c.history)); r.get('/attempts/performance', protect, w(c.performance));
+r.get('/attempts/:id', protect, w(c.getAttempt));
+r.get('/users/profile', protect, w(c.getProfile)); r.put('/users/profile', protect, w(c.updateProfile));
+module.exports = r;
